@@ -1,0 +1,33 @@
+package com.ejemplo.notas.service;
+
+import com.ejemplo.notas.model.Estudiante;
+import com.ejemplo.notas.repository.EstudianteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class EstudianteService {
+    @Autowired
+    private EstudianteRepository estudianteRepository;
+
+    public Estudiante crearEstudiante(Estudiante estudiante) {
+        validarPuntajes(estudiante);
+        estudiante.setPuntajeTotal(calcularPuntajeTotal(estudiante));
+        return estudianteRepository.save(estudiante);
+    }
+
+    private void validarPuntajes(Estudiante estudiante) {
+        // Validaciones de puntajes
+        if (estudiante.getActividad() > 35 || estudiante.getPrimerParcial() > 15 ||
+            estudiante.getSegundoParcial() > 15 || estudiante.getExamenFinal() > 35) {
+            throw new IllegalArgumentException("Puntajes exceden los valores permitidos.");
+        }
+    }
+
+    private int calcularPuntajeTotal(Estudiante estudiante) {
+        return estudiante.getActividad() + estudiante.getPrimerParcial() +
+               estudiante.getSegundoParcial() + estudiante.getExamenFinal();
+    }
+
+    // Métodos para actualizar y consultar estudiantes
+}

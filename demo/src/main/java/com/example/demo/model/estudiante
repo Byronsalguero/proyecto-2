@@ -1,0 +1,21 @@
+package com.ejemplo.notas.model;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "estudiantes")
+public class Estudiante {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nombre;
+
+    private int actividad; // Máximo 35
+    private int primerParcial; // Máximo 15
+    private int segundoParcial; // Máximo 15
+    private int examenFinal; // Máximo 35
+    private int puntajeTotal;
+
+    // Getters y setters
+}
